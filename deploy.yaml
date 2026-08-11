@@ -1,0 +1,11 @@
+app: calnode
+build:
+  context: .
+  dockerfile: Dockerfile
+image:
+  registry: underlamp-k3s-01:5000
+  repository: calnode
+kubernetes:
+  namespace: calnode
+  deployment: calnode
+  container: calnode
