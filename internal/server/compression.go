@@ -10,7 +10,7 @@ import (
 	"github.com/andybalholm/brotli"
 )
 
-// CompressAssets negotiates Brotli or gzip for JavaScript and CSS responses.
+// CompressAssets negotiates Brotli or gzip for text-based static asset responses.
 // The handler buffers only the selected asset response, which keeps the normal
 // API and HTML paths unchanged.
 func CompressAssets(next http.Handler) http.Handler {
@@ -92,7 +92,8 @@ func copyAssetResponse(w http.ResponseWriter, b *assetBuffer, body []byte) {
 func compressibleAsset(contentType string) bool {
 	return strings.HasPrefix(contentType, "application/javascript") ||
 		strings.HasPrefix(contentType, "text/javascript") ||
-		strings.HasPrefix(contentType, "text/css")
+		strings.HasPrefix(contentType, "text/css") ||
+		strings.HasPrefix(contentType, "image/svg+xml")
 }
 
 func appendVary(existing, value string) string {

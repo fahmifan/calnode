@@ -28,3 +28,9 @@ func TestNegotiatedEncoding_rejectsWhenNoEncodingIsAccepted(t *testing.T) {
 		t.Fatalf("encoding = %q, ok=%v; want no acceptable encoding", got, ok)
 	}
 }
+
+func TestCompressibleAsset_acceptsSVG(t *testing.T) {
+	if !compressibleAsset("image/svg+xml; charset=utf-8") {
+		t.Fatal("SVG should be compressible")
+	}
+}

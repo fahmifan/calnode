@@ -517,8 +517,8 @@ func New(ctx context.Context, cfg *config.Config, db *sql.DB, logger *slog.Logge
 	// Favicon at the root, shared by the public server-rendered pages and the
 	// browser's default /favicon.ico probe — same embedded source as the admin SPA.
 	favicon := frontend.FaviconHandler()
-	mux.Handle("GET /favicon.svg", favicon)
-	mux.Handle("GET /favicon.ico", favicon)
+	mux.Handle("GET /favicon.svg", CompressAssets(favicon))
+	mux.Handle("GET /favicon.ico", CompressAssets(favicon))
 
 	// Admin SPA — served at /admin/* with SPA fallback for client-side routing.
 	adminSPA := frontend.Handler()
