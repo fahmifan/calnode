@@ -41,7 +41,7 @@ export function fmtDateTime(iso: string, p: UserPrefs = get(prefs)): string {
 	const timePart = date.toLocaleTimeString(undefined, {
 		hour: '2-digit',
 		minute: '2-digit',
-		hour12: p.time_format === '12h'
+		hourCycle: 'h23'
 	});
 	return `${datePart}, ${timePart}`;
 }
@@ -58,7 +58,7 @@ export function fmtTime(iso: string, p: UserPrefs = get(prefs)): string {
 	return new Date(iso).toLocaleTimeString(undefined, {
 		hour: '2-digit',
 		minute: '2-digit',
-		hour12: p.time_format === '12h'
+		hourCycle: 'h23'
 	});
 }
 

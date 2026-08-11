@@ -24,7 +24,6 @@
 
 	let name = $state('');
 	let timezone = $state('UTC');
-	let time_format = $state<'12h' | '24h'>('24h');
 	let week_start = $state(1);
 	let date_format = $state<'dmy' | 'mdy' | 'ymd'>('dmy');
 
@@ -75,7 +74,6 @@
 		user = await api.get<User>('/v1/users/me');
 		name = user.name ?? '';
 		timezone = user.timezone;
-		time_format = user.time_format ?? '24h';
 		week_start = user.week_start ?? 1;
 		date_format = user.date_format ?? 'dmy';
 		avatarUrl = user.avatar_url ?? '';
@@ -122,7 +120,7 @@
 	async function save() {
 		await savingFlag.run(async () => {
 			const updated = await api.patch<User>('/v1/users/me', {
-				name, timezone, time_format, week_start, date_format,
+			name, timezone, week_start, date_format,
 			});
 			currentUser.set(updated);
 			prefs.set(prefsFromUser(updated));
@@ -205,15 +203,7 @@
 
 				<div class="space-y-1.5">
 					<p class="text-sm font-medium">Time format</p>
-					<div class="flex gap-2">
-						{#each [{ value: '12h', label: '12-hour', hint: '1:30 PM' }, { value: '24h', label: '24-hour', hint: '13:30' }] as opt}
-							<label class="flex flex-1 cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition-colors {time_format === opt.value ? 'border-primary bg-primary/5' : 'bg-background hover:bg-accent/50'}">
-								<input type="radio" bind:group={time_format} value={opt.value} class="sr-only" />
-								{opt.label}
-								<span class="text-xs text-muted-foreground">({opt.hint})</span>
-							</label>
-						{/each}
-					</div>
+					<p class="rounded-md border bg-muted/30 px-3 py-2 text-sm">24-hour (13:30)</p>
 				</div>
 
 				<div class="space-y-1.5">

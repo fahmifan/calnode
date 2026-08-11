@@ -20,12 +20,7 @@
 
 	function fmtTime(t: string) {
 		const [hh, mm] = t.split(':').map(Number);
-		if ($prefs.time_format === '24h') {
-			return mm === 0 ? `${String(hh).padStart(2,'0')}:00` : `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
-		}
-		const ampm = hh < 12 ? 'am' : 'pm';
-		const h12 = hh % 12 || 12;
-		return mm === 0 ? `${h12}${ampm}` : `${h12}:${String(mm).padStart(2,'0')}${ampm}`;
+		return `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
 	}
 
 	// ── Weekly rules — 7-day model ────────────────────────────────────────────────
