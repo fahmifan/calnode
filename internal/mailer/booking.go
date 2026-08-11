@@ -76,13 +76,13 @@ func (d BookingData) LogoOpacityCSS() string {
 }
 
 // WhenFmt renders the booking time as a single human line in the organizer's
-// timezone, e.g. "Mon 22 Jun 2026, 9:00 AM – 9:20 AM NZST".
+// timezone, e.g. "Mon 22 Jun 2026, 09:00 – 09:20 NZST".
 func (d BookingData) WhenFmt() string {
 	loc, err := time.LoadLocation(d.OrganizerTimezone)
 	if err != nil {
 		loc = time.UTC
 	}
-	return d.StartAt.In(loc).Format("Mon 2 Jan 2006, 3:04 PM") + " – " + d.EndAt.In(loc).Format("3:04 PM MST")
+	return d.StartAt.In(loc).Format("Mon 2 Jan 2006, 15:04") + " – " + d.EndAt.In(loc).Format("15:04 MST")
 }
 
 // StartFmt returns StartAt formatted in the organizer's timezone.
@@ -110,7 +110,7 @@ func inTZ(t time.Time, tz string) string {
 	if err != nil {
 		loc = time.UTC
 	}
-	return t.In(loc).Format("Mon 2 Jan 2006, 3:04 PM MST")
+	return t.In(loc).Format("Mon 2 Jan 2006, 15:04 MST")
 }
 
 // calDetails is the shared "add to calendar" description for the link builders.

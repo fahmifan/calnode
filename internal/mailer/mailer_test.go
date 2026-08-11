@@ -54,6 +54,22 @@ func testBookingData() BookingData {
 	}
 }
 
+func TestBookingData_emailTimesUse24HourFormat(t *testing.T) {
+	d := testBookingData()
+	d.StartAt = time.Date(2026, 6, 15, 13, 5, 0, 0, time.UTC)
+	d.EndAt = time.Date(2026, 6, 15, 14, 35, 0, 0, time.UTC)
+
+	if got, want := d.WhenFmt(), "Mon 15 Jun 2026, 13:05 – 14:35 UTC"; got != want {
+		t.Errorf("WhenFmt() = %q; want %q", got, want)
+	}
+	if got, want := d.StartFmt(), "Mon 15 Jun 2026, 13:05 UTC"; got != want {
+		t.Errorf("StartFmt() = %q; want %q", got, want)
+	}
+	if got, want := d.EndFmt(), "Mon 15 Jun 2026, 14:35 UTC"; got != want {
+		t.Errorf("EndFmt() = %q; want %q", got, want)
+	}
+}
+
 // ---------------------------------------------------------------------------
 // SendConfirmation
 // ---------------------------------------------------------------------------
