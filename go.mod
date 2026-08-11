@@ -3,6 +3,7 @@ module github.com/calnode/calnode
 go 1.26
 
 require (
+	github.com/andybalholm/brotli v1.2.1
 	github.com/disintegration/imaging v1.6.2
 	github.com/joho/godotenv v1.5.1
 	github.com/modelcontextprotocol/go-sdk v1.6.1

@@ -439,15 +439,15 @@ func New(ctx context.Context, cfg *config.Config, db *sql.DB, logger *slog.Logge
 	mux.HandleFunc("GET /v1/bookings/{id}/answers", h.RequireAuth(h.GetBookingAnswers))
 
 	// Public booking page
-	mux.HandleFunc("GET /embed.js", h.EmbedJS)
-	mux.HandleFunc("GET /booking.css", h.BookingCSS)
+	mux.Handle("GET /embed.js", CompressAssets(http.HandlerFunc(h.EmbedJS)))
+	mux.Handle("GET /booking.css", CompressAssets(http.HandlerFunc(h.BookingCSS)))
 	mux.HandleFunc("GET /book/{slug}", h.BookPage)
 
 	// Built-in LiveKit video room (public): the page, its vendored assets, and the token
 	// exchange. The signed room token in the join URL is the capability — no auth.
 	mux.HandleFunc("GET /room/{room}", h.LiveKitRoom)
-	mux.HandleFunc("GET /assets/livekit-client.js", h.LiveKitSDKAsset)
-	mux.HandleFunc("GET /assets/livekit-room.js", h.LiveKitRoomJSAsset)
+	mux.Handle("GET /assets/livekit-client.js", CompressAssets(http.HandlerFunc(h.LiveKitSDKAsset)))
+	mux.Handle("GET /assets/livekit-room.js", CompressAssets(http.HandlerFunc(h.LiveKitRoomJSAsset)))
 	mux.HandleFunc("POST /v1/livekit/token", bookingRL(h.LiveKitToken))
 	mux.HandleFunc("POST /v1/livekit/room/end", bookingRL(h.EndRoom))
 	mux.HandleFunc("POST /v1/livekit/room/reassign-host", bookingRL(h.ReassignHost))
@@ -523,7 +523,7 @@ func New(ctx context.Context, cfg *config.Config, db *sql.DB, logger *slog.Logge
 	// Admin SPA — served at /admin/* with SPA fallback for client-side routing.
 	adminSPA := frontend.Handler()
 	mux.Handle("GET /admin", http.RedirectHandler("/admin/", http.StatusMovedPermanently))
-	mux.Handle("/admin/", http.StripPrefix("/admin", adminSPA))
+	mux.Handle("/admin/", CompressAssets(http.StripPrefix("/admin", adminSPA)))
 
 	// Bare root → admin. The `{$}` anchor matches ONLY the exact path "/", so it
 	// stays a no-op for every other unmatched path (those still 404). Public
