@@ -73,8 +73,8 @@ func (h *Handler) Setup(w http.ResponseWriter, r *http.Request) {
 
 	// The first user is the workspace owner (and therefore an admin).
 	if _, err := tx.ExecContext(r.Context(), `
-		INSERT INTO users (id, email, name, iana_timezone, is_admin, is_owner)
-		VALUES (?, ?, ?, ?, 1, 1)`,
+		INSERT INTO users (id, email, name, iana_timezone, time_format, is_admin, is_owner)
+		VALUES (?, ?, ?, ?, '24h', 1, 1)`,
 		userID, req.Email, req.Name, req.Timezone); err != nil {
 		h.logger.ErrorContext(r.Context(), "setup: insert user", "error", err)
 		h.writeError(w, http.StatusInternalServerError, "internal error")

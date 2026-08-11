@@ -35,10 +35,10 @@
     return by;
   }
 
-  // formatTime — "1:30 PM" in the selected tz.
+  // formatTime — "13:30" in the selected tz.
   function formatTime(iso, tz, locale) {
     return new Intl.DateTimeFormat(locale || [], {
-      timeZone: tz, hour: 'numeric', minute: '2-digit'
+      timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
     }).format(new Date(iso));
   }
 

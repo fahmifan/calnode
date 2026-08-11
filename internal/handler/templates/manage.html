@@ -280,7 +280,7 @@ body {
   function fmtDatetime(iso) {
     const d = new Date(iso);
     return d.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric', timeZone: TZ }) +
-           ' · ' + d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', timeZone: TZ });
+           ' · ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: TZ });
   }
   function toDateStr(y, m, d) { return `${y}-${pad(m+1)}-${pad(d)}`; }
 

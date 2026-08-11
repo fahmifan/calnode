@@ -291,8 +291,8 @@ func (h *Handler) ClaimInvite(w http.ResponseWriter, r *http.Request) {
 
 	userID := uid.New()
 	if _, err := tx.ExecContext(r.Context(), `
-		INSERT INTO users (id, email, name, iana_timezone, is_admin, email_login, password_hash)
-		VALUES (?, ?, ?, ?, 0, 1, ?)`,
+		INSERT INTO users (id, email, name, iana_timezone, time_format, is_admin, email_login, password_hash)
+		VALUES (?, ?, ?, ?, '24h', 0, 1, ?)`,
 		userID, email, req.Name, req.Timezone, string(hash)); err != nil {
 		h.logger.ErrorContext(r.Context(), "claim invite: insert user", "error", err)
 		h.writeError(w, http.StatusInternalServerError, "internal error")

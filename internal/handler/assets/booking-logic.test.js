@@ -55,7 +55,7 @@ test('formatHostsLabel — 1/2/3/overflow', () => {
 
 test('formatTime / formatDay respect tz', () => {
   const iso = '2026-06-15T02:00:00Z';
-  assert.equal(B.formatTime(iso, 'UTC', 'en-US'), '2:00 AM');
+  assert.equal(B.formatTime(iso, 'UTC', 'en-US'), '02:00');
   // NY (UTC-4) → prev day, June 14
   assert.match(B.formatDay(iso, 'America/New_York', 'short', 'en-US'), /Jun 14/);
   assert.match(B.formatDay(iso, 'America/New_York', 'long', 'en-US'), /June 14/);

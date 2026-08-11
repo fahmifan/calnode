@@ -67,7 +67,7 @@
 		try { return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }); } catch { return iso; }
 	}
 	function fmtTime(iso: string) {
-		try { return new Date(iso).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }); } catch { return ''; }
+		try { return new Date(iso).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }); } catch { return ''; }
 	}
 	const statusStyle: Record<string, string> = {
 		complete: 'bg-green-50 text-green-700',

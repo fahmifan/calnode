@@ -35,8 +35,8 @@ func TestGetMe_returnsDefaultPrefs(t *testing.T) {
 	var me map[string]any
 	json.Unmarshal(rec.Body.Bytes(), &me)
 
-	if me["time_format"] != "12h" {
-		t.Errorf("time_format = %v; want 12h (default)", me["time_format"])
+	if me["time_format"] != "24h" {
+		t.Errorf("time_format = %v; want 24h (default)", me["time_format"])
 	}
 	if me["week_start"] != float64(1) {
 		t.Errorf("week_start = %v; want 1 (Monday default)", me["week_start"])
